@@ -25,3 +25,12 @@
 
 ## Master Layout
 - trong ./pages/_app.js chỉ sử dụng được getInitialProps
+
+
+*** NOTE
+
+- 5. Project thực tế (NextJs + React + Typescrpit)
+  ++ 3. Tạo Master Layout cho ứng dụng
+    +++ 2. Master Layout 02
+      ++++ chú ý về đường dẫn tương đối và tuyệt đối: background-image: url('/images/menu-bg.jpg'); => nếu trước là đường dẫn là ../ => đường dẫn tương đối, nếu trước là đường dẫn là / => đường dẫn tuyệt đối => sẽ đi vào thư mục public => sẽ tự lấy đường dẫn phía trước
+      ++++ chú ý thứ tự import bootstrap và css trong những project đã được cung cấp trước HTML
