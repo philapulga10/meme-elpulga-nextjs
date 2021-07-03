@@ -1,0 +1,27 @@
+# Các bước setup project
+
+# Cài đặt Next App
+- npx create-next-app
+
+## Cài đặt Typescript
+
+### Tạo file tsconfig.json và run code
+- tsconfig.json
+- npm install --save-dev typescript @types/react @types/node
+- npm run dev
+
+=> file next-env.d.ts sẽ được sinh tự động
+=> nội dung trong tsconfig.json sẽ được cấu hình tự động
+
+## Tạo thêm config cho images, sass, css
+- tạo file: next.config.js
+- npm install --save next-images
+- npm install --save @zeit/next-css
+- npm install --save @zeit/next-sass node-sass
+- https://github.com/vercel/next-plugins
+- https://github.com/vercel/next-plugins/tree/master/packages/next-sass
+- https://github.com/vercel/next-plugins/tree/master/packages/next-css
+- https://github.com/twopluszero/next-images
+
+## Master Layout
+- trong ./pages/_app.js chỉ sử dụng được getInitialProps
