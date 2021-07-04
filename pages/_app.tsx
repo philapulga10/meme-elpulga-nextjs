@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   });
 
   const hiddenFooter = useMemo(() => {
-    const excluded = ['/'];
+    const excluded = ['/', '/posts/[postId]'];
     const currentPath = router.pathname;
 
     return (excluded.indexOf(currentPath) !== -1);

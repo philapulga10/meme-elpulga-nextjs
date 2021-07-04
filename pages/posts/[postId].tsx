@@ -1,5 +1,17 @@
+import { HomeSideBar } from "../../components/HomeSidebar";
+import { PostDetailContent } from "../../components/PostDetailContent";
+
 export default function PostDetail() {
   return (
-    <h1>Post Detail</h1>
+    <div className="container">
+      <div className="row">
+        <div className="col-lg-8">
+          <PostDetailContent />
+        </div>
+        <div className="col-lg-4">
+          <HomeSideBar />
+        </div>
+      </div>
+    </div>
   )
 };
