@@ -1,18 +1,33 @@
 import "bootstrap/dist/css/bootstrap.min.css"; // là lúc sử dụng withCSS, vì muốn import CSS bên ngoài vào
 import '../assets/css/style.css';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import App, { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 
 import { Header } from './../components/Header';
+import { Footer } from "../components/Footer";
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   useEffect(() => {
-    console.log('pageProps = ', pageProps);
-    console.log('router = ', router);
+    // console.log('pageProps = ', pageProps);
+    // console.log('router = ', router);
   });
+
+  const hiddenFooter = useMemo(() => {
+    const excluded = ['/'];
+    const currentPath = router.pathname;
+
+    return (excluded.indexOf(currentPath) !== -1);
+  }, [router]);
+
+  const hiddenHeader = useMemo(() => {
+    const exluded = ['/login', '/register'];
+    const currentPath = router.pathname;
+
+    return (exluded.indexOf(currentPath) !== -1);
+  }, [router]);
 
   return (
     <div id="root">
@@ -21,16 +36,16 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
         <meta name="keywords" content="HTML5 Template" />
-        <meta name="description" content="Cộng đồng chế ảnh ZendVN" />
+        <meta name="description" content="Cộng đồng chế ảnh Elpulga" />
         <meta name="author" content="etheme.com" />
         <link rel="icon" href="/favicon.ico" />
-        <title>Cộng đồng chế ảnh ZendVN</title>
+        <title>Cộng đồng chế ảnh Elpulga</title>
 
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" />
         {/* icon */}
         {/* Font Awesome */}
-        <link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.css" />
-        <link rel="stylesheet" href="fonts/emotion/style.css" />
+        <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="/fonts/emotion/style.css" />
 
         {/* JAVA SCRIPT */}
         {/* require */}
@@ -38,11 +53,13 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         {/* HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries */}
         {/*[if lt IE 9]>
 
-
 	      <![endif]*/}
       </Head>
-      <Header />
-      <Component {...pageProps} />
+      {!hiddenHeader && <Header />}
+      <main>
+        <Component {...pageProps} />
+      </main>
+      {!hiddenFooter && <Footer />}
     </div>
   )
 }
@@ -50,12 +67,9 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext);
 
-  console.log('appProps: ', appProps);
-
   return {
     pageProps: {
-      // copy toàn bộ pageProps cũ và pageProps từ page khác truyền vào
-      ...appProps.pageProps
+      ...appProps.pageProps // copy toàn bộ pageProps cũ và pageProps từ page khác truyền vào
     }
   };
 }
