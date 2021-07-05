@@ -54,3 +54,11 @@
     +++ header là phần bìa thư gửi lên server (gửi từ đâu, tới đâu). bearer do backend quy định
   ++ 3. Thu thập dữ liệu từ Form Login
     +++ sự khác nhau giữa sự kiện click và submit: submit có thêm sự kiện enter
+    +++ interface:
+      ++++ để định nghĩa ra 1 kiểu dữ liệu chung cho tất cả các hàm hoặc class, tạo ra 1 bản thiết kế của kiểu dữ liệu => để cho các hàm hoặc các class sau dùng => có thể dùng chung => khi thay đổi sẽ thuận tiện
+      ++++ là phần thể hiện bên ngoài chức năng
+      ++++ Giao diện cho biết chức năng hoạt động thế nào nhưng chưa triển khai được, nhưng không cho biết chi tiết bên trong nó.
+      ++++ khi làm việc nhóm, thì người leader vần vẽ ra chức năng chi tiết cho các class cách hàm, đảm bảo tính hệ thống của chương trình
+      ++++ onChange() => JS sẽ hiểu đây là lời gọi hàm tường minh => khi thực thi sẽ gọi làm => chỉ được phép truyền tham chiếu => JS sẽ ngầm gọi
+  ++ 4. Gọi API Login phía Client
+    +++ onSubmit: có 1 sự kiện mặc định của form là gửi request data lên action hiện tại là # => reload lại trang => có thể không cho nó gửi

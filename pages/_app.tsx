@@ -7,7 +7,7 @@ import App, { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 
 import fetch from 'isomorphic-fetch';
-import es6Promise from 'es6-promise';
+import es6Promise from 'es6-promise'; // nhờ có es6Promise => có thể .then sau fetch
 
 import { Header } from './../components/Header';
 import { Footer } from "../components/Footer";
