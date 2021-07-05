@@ -6,8 +6,13 @@ import { useEffect, useMemo } from 'react';
 import App, { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 
+import fetch from 'isomorphic-fetch';
+import es6Promise from 'es6-promise';
+
 import { Header } from './../components/Header';
 import { Footer } from "../components/Footer";
+
+es6Promise.polyfill();
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   useEffect(() => {
@@ -53,7 +58,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         {/* HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries */}
         {/*[if lt IE 9]>
 
-	      <![endif]*/}
+        <![endif]*/}
       </Head>
       {!hiddenHeader && <Header />}
       <main>
