@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import api from '../services/api';
+import fetch from 'isomorphic-fetch';
 
 // interface: khai báo kiểu dữ liệu
 // => tránh cho mỗi người develope khai báo kiểu dữ liệu (cụ thể ở đây là object) khác nhau
@@ -30,9 +30,17 @@ export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const data = api.callJSON('/member/login.php', formData, 'POST').then((data) => { console.log(data); });
-
-    console.log('data = ', data);
+    fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('data = ', data);
+      });
   };
 
   return (

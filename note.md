@@ -62,3 +62,16 @@
       ++++ onChange() => JS sẽ hiểu đây là lời gọi hàm tường minh => khi thực thi sẽ gọi làm => chỉ được phép truyền tham chiếu => JS sẽ ngầm gọi
   ++ 4. Gọi API Login phía Client
     +++ onSubmit: có 1 sự kiện mặc định của form là gửi request data lên action hiện tại là # => reload lại trang => có thể không cho nó gửi
+  ++ 5. Custom API phía Server bằng NextJs
+    +++ giấu đi endpoint (/member/login.php): tạo custom server ở phía NextJS => NextJS sẽ gọi lên Heroku
+    +++ set cookie phía server k cần dùng JS
+    +++ redirect phía server (không dùng Router.push) sẽ dùng status code header request
+  ++ 6. Gọi API Login phía Server
+    +++ khi call api không cần truyền URL của BASE_URL nữa => mặc định NextJS sẽ nối cho mình => k cần cấu hình thêm những phần kết nối với server
+    +++ mã nguồn của client và server chung 1 source
+  ++ 7. Các kỹ thuật với Cookie phía Client và Server
+    +++ cookies có thể được lưu ở cookies và local storage
+    +++ sự khác nhau giữa cookies và local storage:
+      +++ local storage (chỉ trình duyệt truy xuất được)
+      +++ cookies (trình duyệt có thể truy xuất, có thể gửi nó lên request phía server tức là mỗi lần request lên server luôn luôn nhận được cookies này)
+      +++ nếu không định nghĩa thời gian hết hạn => hiểu cookies lúc này là 1 phiên làm việc => tắt trình duyệt sẽ mất giá trị này

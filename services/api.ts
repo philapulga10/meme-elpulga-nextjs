@@ -2,8 +2,13 @@ import fetch from 'isomorphic-fetch';
 
 import { BASE_URL } from '../constants';
 
+type ConfigType = {
+  method?: string,
+  data?: any
+};
+
 const api = {
-  callJSON: async (url: string, data: Record<string, any>, method = 'GET') => {
+  callJSON: async (url: string, { method = 'GET', data }: ConfigType = {}) => {
     const URL = `${BASE_URL}/${url}`;
     const config = {
       method,
