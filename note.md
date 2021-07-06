@@ -80,3 +80,12 @@
         ++++ action: đường dẫn server
         ++++ method: phương thức gửi lên server
       +++ để redirect người dùng ở phía server => cần kiến thức về backend => http request status code 302 (kèm theo header location)
+  ++ 9. Xử lí Error cho chức năng Login phía Server
+      +++ login => /api/login
+        ++++ thành công
+              => redirect sang trang home page
+              => lấy được token trong _app.tsx
+              (server side render get thông tin user trong app)
+        ++++ thất bại: redirect lại /login?error=abcd
+          +++++ lỗi nhập liệu từ form (nên xử lý phía client) => xử lý trước khi submit
+          +++++ đăng nhập thất bại (email sai, password sai): email hoặc password không hợp lệ

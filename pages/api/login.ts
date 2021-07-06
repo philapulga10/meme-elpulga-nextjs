@@ -26,12 +26,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.statusCode = 302;
       res.setHeader('Location', '/');
       res.setHeader('Content-Type', 'application/json');
-      res.setHeader('X-Token', 'value test');
       res.setHeader('Set-Cookie', `token=${responseHeroku.token}; expires=${nextYear.toUTCString()}; Path=/`);
       res.json(responseHeroku);
     } else {
       res.statusCode = 302;
-      res.setHeader('Location', '/login?error=loginUnsuccessful');
+      res.setHeader('Location', '/login?error=failed');
       res.json(responseHeroku);
     }
   } catch (error) {

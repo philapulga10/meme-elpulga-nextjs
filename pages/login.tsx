@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 
 import fetch from 'isomorphic-fetch';
@@ -19,6 +19,15 @@ export default function Login() {
   };
   const [formData, setFormData] = useState<formLogin>(initFormData);
   const router = useRouter();
+  const errorString = router.query.error;
+
+  useEffect(() => {
+    if (errorString) {
+      alert('Login Unsuccessful');
+
+      window.history.pushState({}, document.title, "/login");
+    }
+  }, [errorString]);
 
   const handleChange = (key) => {
     // closure trong JS
@@ -50,6 +59,12 @@ export default function Login() {
       });
   };
 
+  function handleSubmitForm(event) {
+    event.preventDefault();
+
+    event.target.submit();
+  }
+
   return (
     <div className="ass1-login">
       <div className="ass1-login__logo">
@@ -59,7 +74,7 @@ export default function Login() {
         <p>Đăng nhập</p>
         <div className="ass1-login__form">
           {/* <form onSubmit={handleSubmit} action="#"> */}
-          <form action="/api/login" method="POST">
+          <form onSubmit={handleSubmitForm} action="/api/login" method="POST">
             <input
               // onChange={handleChange('email')}
               type="text"
