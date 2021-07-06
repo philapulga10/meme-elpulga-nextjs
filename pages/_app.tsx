@@ -15,6 +15,8 @@ import { Footer } from "../components/Footer";
 es6Promise.polyfill();
 
 function MyApp({ Component, pageProps, router }: AppProps) {
+  const pathname = router.pathname;
+
   useEffect(() => {
     // console.log('pageProps = ', pageProps);
     // console.log('router = ', router);
@@ -22,17 +24,15 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 
   const hiddenFooter = useMemo(() => {
     const excluded = ['/', '/posts/[postId]'];
-    const currentPath = router.pathname;
 
-    return (excluded.indexOf(currentPath) !== -1);
-  }, [router]);
+    return (excluded.indexOf(pathname) !== -1);
+  }, [pathname]); // chú ý: địa chỉ của router props không thay đổi, chỉ thay đổi nội dung bên trong thui
 
   const hiddenHeader = useMemo(() => {
     const exluded = ['/login', '/register'];
-    const currentPath = router.pathname;
 
-    return (exluded.indexOf(currentPath) !== -1);
-  }, [router]);
+    return (exluded.indexOf(pathname) !== -1);
+  }, [pathname]);
 
   return (
     <div id="root">

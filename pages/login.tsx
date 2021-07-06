@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from 'next/router';
 
 import fetch from 'isomorphic-fetch';
 import Cookies from 'js-cookie';
@@ -17,6 +18,7 @@ export default function Login() {
     password: ''
   };
   const [formData, setFormData] = useState<formLogin>(initFormData);
+  const router = useRouter();
 
   const handleChange = (key) => {
     // closure trong JS
@@ -42,7 +44,9 @@ export default function Login() {
       .then((data) => {
         console.log('data = ', data);
 
-        Cookies.set('token', data.token, { expires: 30 });
+        // Cookies.set('token', data.token, { expires: 30 });
+
+        // router.push('/');
       });
   };
 
@@ -54,18 +58,22 @@ export default function Login() {
       <div className="ass1-login__content">
         <p>Đăng nhập</p>
         <div className="ass1-login__form">
-          <form onSubmit={handleSubmit} action="#">
+          {/* <form onSubmit={handleSubmit} action="#"> */}
+          <form action="/api/login" method="POST">
             <input
-              onChange={handleChange('email')}
+              // onChange={handleChange('email')}
               type="text"
-              value={formData.email}
+              name="email"
+              // value={formData.email}
               className="form-control"
               placeholder="Email"
               required
             />
             <input
-              onChange={handleChange('password')}
+              // onChange={handleChange('password')}
               type="password"
+              name="password"
+              // value={formData.password}
               className="form-control"
               placeholder="Mật khẩu"
               required

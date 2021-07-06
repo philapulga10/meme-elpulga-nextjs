@@ -75,3 +75,8 @@
       +++ local storage (chỉ trình duyệt truy xuất được)
       +++ cookies (trình duyệt có thể truy xuất, có thể gửi nó lên request phía server tức là mỗi lần request lên server luôn luôn nhận được cookies này)
       +++ nếu không định nghĩa thời gian hết hạn => hiểu cookies lúc này là 1 phiên làm việc => tắt trình duyệt sẽ mất giá trị này
+  ++ 8. Kỹ thuật Redirect phía Client và Server
+      +++ kiến thức về form:
+        ++++ action: đường dẫn server
+        ++++ method: phương thức gửi lên server
+      +++ để redirect người dùng ở phía server => cần kiến thức về backend => http request status code 302 (kèm theo header location)
