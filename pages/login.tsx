@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import fetch from 'isomorphic-fetch';
+import Cookies from 'js-cookie';
 
 // interface: khai báo kiểu dữ liệu
 // => tránh cho mỗi người develope khai báo kiểu dữ liệu (cụ thể ở đây là object) khác nhau
@@ -40,6 +41,8 @@ export default function Login() {
       .then((response) => response.json())
       .then((data) => {
         console.log('data = ', data);
+
+        Cookies.set('token', data.token, { expires: 30 });
       });
   };
 

@@ -17,9 +17,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
+    const currentTime = new Date();
+    const nextYear = new Date(currentTime.getFullYear() + 1, currentTime.getMonth(), currentTime.getDay());
+
     const responseHeroku = await api.callJSON('/member/login.php', { method, data });
 
     res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('X-Token', 'value test');
+    res.setHeader('Set-Cookie', `token=${responseHeroku.token}; expires=${nextYear.toUTCString()}; Path=/`);
     res.json(responseHeroku);
   } catch (error) {
     res.statusCode = 200;
