@@ -76,16 +76,23 @@
       +++ cookies (trình duyệt có thể truy xuất, có thể gửi nó lên request phía server tức là mỗi lần request lên server luôn luôn nhận được cookies này)
       +++ nếu không định nghĩa thời gian hết hạn => hiểu cookies lúc này là 1 phiên làm việc => tắt trình duyệt sẽ mất giá trị này
   ++ 8. Kỹ thuật Redirect phía Client và Server
-      +++ kiến thức về form:
-        ++++ action: đường dẫn server
-        ++++ method: phương thức gửi lên server
-      +++ để redirect người dùng ở phía server => cần kiến thức về backend => http request status code 302 (kèm theo header location)
+    +++ kiến thức về form:
+      ++++ action: đường dẫn server
+      ++++ method: phương thức gửi lên server
+    +++ để redirect người dùng ở phía server => cần kiến thức về backend => http request status code 302 (kèm theo header location)
   ++ 9. Xử lí Error cho chức năng Login phía Server
-      +++ login => /api/login
-        ++++ thành công
-              => redirect sang trang home page
-              => lấy được token trong _app.tsx
-              (server side render get thông tin user trong app)
-        ++++ thất bại: redirect lại /login?error=abcd
-          +++++ lỗi nhập liệu từ form (nên xử lý phía client) => xử lý trước khi submit
-          +++++ đăng nhập thất bại (email sai, password sai): email hoặc password không hợp lệ
+    +++ login => /api/login
+      ++++ thành công
+            => redirect sang trang home page
+            => lấy được token trong _app.tsx
+            (server side render get thông tin user trong app)
+      ++++ thất bại: redirect lại /login?error=abcd
+        +++++ lỗi nhập liệu từ form (nên xử lý phía client) => xử lý trước khi submit
+        +++++ đăng nhập thất bại (email sai, password sai): email hoặc password không hợp lệ
+  ++ 10. Lấy Token từ Custom App và Master Layout
+    +++ try catch: khi lỗi sẽ đi vào catch và không bị crash app
+    +++ utils, helpers: chứa những hàm hỗ trợ riêng bên ngoài được sử dụng kèm trong project mà không phụ thuộc vào component
+  ++ 11. Gọi API Get User Info dựa vào token
+    +++ lưu ý khi dùng những thư viện có dùng trong typescript => có dấu ... => tức là hiện tại nó không dùng typescript => không khai báo kiểu dữ liệu => không tìm thấy file định nghĩa dữ liệu cho module cookie => do 1 số thư viện đã code sẵn cho mình kiểu dữ liệu => 1 số thì không => npm install để cài => cài theo devDependences
+    +++ nên cài kiểu dữ liệu cho thư viện: là kiểu dữ liệu trong quá trình lập trình giúp nhắc lệnh tốt hơn
+    +++ *** chú ý: tại sao trong userSirvice: lại không có await???

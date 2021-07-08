@@ -6,11 +6,13 @@ import { useEffect, useMemo } from 'react';
 import App, { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 
-import fetch from 'isomorphic-fetch';
 import es6Promise from 'es6-promise'; // nhờ có es6Promise => có thể .then sau fetch
+import cookie from 'cookie';
 
 import { Header } from './../components/Header';
 import { Footer } from "../components/Footer";
+import { parseJwt } from "../helpers";
+import userService from '../services/UserService';
 
 es6Promise.polyfill();
 
@@ -18,8 +20,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   const pathname = router.pathname;
 
   useEffect(() => {
-    // console.log('pageProps = ', pageProps);
-    // console.log('router = ', router);
+    console.log('pageProps = ', pageProps.userInfo);
   });
 
   const hiddenFooter = useMemo(() => {
@@ -71,10 +72,21 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext);
+  const cookieStr = appContext.ctx.req.headers.cookie || ''; // cookie này chứa tất cả cookie của trình duyệt
+  const token = cookie.parse(cookieStr).token; // parse string ra object
+  const userToken = parseJwt(token);
+  let userResponse = null;
+
+  if (userToken && userToken.id) {
+    userResponse = await userService.getUserById(userToken.id);
+
+    console.log('userResponse = ', userResponse);
+  }
 
   return {
     pageProps: {
-      ...appProps.pageProps // copy toàn bộ pageProps cũ và pageProps từ page khác truyền vào
+      ...appProps.pageProps, // copy toàn bộ pageProps cũ và pageProps từ page khác truyền vào
+      userInfo: userResponse && userResponse.user
     }
   };
 }

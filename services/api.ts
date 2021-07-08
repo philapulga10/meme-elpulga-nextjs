@@ -18,7 +18,7 @@ const api = {
       body: JSON.stringify(data)
     };
 
-    return await fetch(URL, config).then((response) => response.json());
+    return fetch(URL, config).then((response) => response.json());
   },
   callJSONWithAuth: async (url: string, data: Record<string, any>, method = 'GET') => {
     const URL = `${BASE_URL}/${url}`;
@@ -31,7 +31,7 @@ const api = {
       body: JSON.stringify(data)
     };
 
-    return await fetch(URL, config).then((response) => response.json());
+    return fetch(URL, config).then((response) => response.json());
   }
 };
 
