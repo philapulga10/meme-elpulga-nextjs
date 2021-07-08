@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import fetch from 'isomorphic-fetch';
 import Cookies from 'js-cookie';
+import { useGlobalState } from "../state";
 
 // interface: khai báo kiểu dữ liệu
 // => tránh cho mỗi người develope khai báo kiểu dữ liệu (cụ thể ở đây là object) khác nhau
@@ -19,7 +20,12 @@ export default function Login() {
   };
   const [formData, setFormData] = useState<formLogin>(initFormData);
   const router = useRouter();
+  const [userInfo] = useGlobalState('currentUser');
   const errorString = router.query.error;
+
+  useEffect(() => {
+    console.log('userInfo Login Page: ', userInfo);
+  }, []);
 
   useEffect(() => {
     if (errorString) {

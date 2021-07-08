@@ -13,15 +13,18 @@ import { Header } from './../components/Header';
 import { Footer } from "../components/Footer";
 import { parseJwt } from "../helpers";
 import userService from '../services/UserService';
+import { useGlobalState } from '../state';
 
 es6Promise.polyfill();
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const pathname = router.pathname;
+  const [currentUser, setCurrentUser] = useGlobalState('currentUser');
 
-  useEffect(() => {
-    console.log('pageProps = ', pageProps.userInfo);
-  });
+  useMemo(() => {
+    // chạy 1 lần duy nhất ở phía server
+    setCurrentUser(pageProps.userInfo);
+  }, []);
 
   const hiddenFooter = useMemo(() => {
     const excluded = ['/', '/posts/[postId]'];
@@ -71,22 +74,24 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 }
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
-  const appProps = await App.getInitialProps(appContext);
-  const cookieStr = appContext.ctx.req.headers.cookie || ''; // cookie này chứa tất cả cookie của trình duyệt
-  const token = cookie.parse(cookieStr).token; // parse string ra object
-  const userToken = parseJwt(token);
   let userResponse = null;
 
-  if (userToken && userToken.id) {
-    userResponse = await userService.getUserById(userToken.id);
+  const appProps = await App.getInitialProps(appContext);
 
-    console.log('userResponse = ', userResponse);
+  if (typeof (window) === "undefined") {
+    const cookieStr = appContext.ctx.req.headers.cookie || ''; // cookie này chứa tất cả cookie của trình duyệt
+    const token = cookie.parse(cookieStr).token; // parse string ra object
+    const userToken = parseJwt(token);
+
+    if (userToken && userToken.id) {
+      userResponse = await userService.getUserById(userToken.id);
+    }
   }
 
   return {
     pageProps: {
       ...appProps.pageProps, // copy toàn bộ pageProps cũ và pageProps từ page khác truyền vào
-      userInfo: userResponse && userResponse.user
+      // userInfo: userResponse && userResponse.user
     }
   };
 }

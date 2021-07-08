@@ -1,3 +1,7 @@
+import Link from 'next/link';
+
+import './Header.scss';
+
 export default function Header() {
   return (
     <header>
@@ -93,9 +97,18 @@ export default function Header() {
           <a href="#" className="ass1-header__btn-upload ass1-btn">
             <i className="icon-Upvote"></i> Upload
           </a>
-          <a href="dang-nhap.html" className="ass1-header__btn-upload ass1-btn">
-            Login
-          </a>
+          <div className="wrapper-user">
+            <a className="user-header">
+              <span className="avatar">
+                <img src="./images/avatar-02.png" alt="avatar" />
+              </span>
+              <span className="email">phi.elpulga10@gmail.com</span>
+              <div className="logout">Logout</div>
+            </a>
+          </div>
+          <Link href="/login">
+            <a className="ass1-header__btn-upload ass1-btn">Login</a>
+          </Link>
         </div>
       </div>
     </header>
