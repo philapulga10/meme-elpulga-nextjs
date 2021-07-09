@@ -1,24 +1,25 @@
 import { useEffect } from 'react';
-import Cookies from 'js-cookie';
-import { parseJwt } from '../helpers';
 import { useRouter } from 'next/router';
 
-function useAuthentication() {
+import { parseJwt } from '.';
+import { useGlobalState } from '../state';
+
+function useAuthen() {
   const router = useRouter();
-  const token = Cookies.get('token');
+  const [token] = useGlobalState('token');
 
   useEffect(() => {
     const userToken = parseJwt(token);
 
     if (!(userToken && userToken.id && userToken.email)) {
-      router.push('/');
+      router.push('/login');
     }
   }, [token]);
 }
 
-function useNotAuthenticated() {
+function useNotAuthen() {
   const router = useRouter();
-  const token = Cookies.get('token');
+  const [token] = useGlobalState('token');
 
   useEffect(() => {
     const userToken = parseJwt(token);
@@ -29,4 +30,4 @@ function useNotAuthenticated() {
   }, [token]);
 }
 
-export { useAuthentication, useNotAuthenticated };
+export { useAuthen, useNotAuthen };

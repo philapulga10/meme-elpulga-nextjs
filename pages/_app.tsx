@@ -1,17 +1,16 @@
 import "bootstrap/dist/css/bootstrap.min.css"; // là lúc sử dụng withCSS, vì muốn import CSS bên ngoài vào
 import '../assets/css/style.css';
 
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import App, { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 
 import es6Promise from 'es6-promise'; // nhờ có es6Promise => có thể .then sau fetch
-import cookie from 'cookie';
 
 import { Header } from './../components/Header';
 import { Footer } from "../components/Footer";
-import { parseJwt } from "../helpers";
+import { getTokenSSRAndCSS } from "../helpers";
 import userService from '../services/UserService';
 import { useGlobalState } from '../state';
 
@@ -19,9 +18,11 @@ es6Promise.polyfill();
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const pathname = router.pathname;
+  const [, setToken] = useGlobalState('token');
   const [currentUser, setCurrentUser] = useGlobalState('currentUser');
 
   useMemo(() => {
+    setToken(pageProps.token);
     // chạy 1 lần duy nhất ở phía server
     setCurrentUser(pageProps.userInfo);
   }, []);
@@ -78,12 +79,10 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 
   const appProps = await App.getInitialProps(appContext);
 
-  if (typeof (window) === "undefined") {
-    const cookieStr = appContext.ctx.req.headers.cookie || ''; // cookie này chứa tất cả cookie của trình duyệt
-    const token = cookie.parse(cookieStr).token; // parse string ra object
-    const userToken = parseJwt(token);
+  const [token, userToken] = getTokenSSRAndCSS(appContext.ctx);
 
-    if (userToken && userToken.id) {
+  if (typeof (window) === 'undefined' && userToken) {
+    if (userToken.id && userToken.email) {
       userResponse = await userService.getUserById(userToken.id);
     }
   }
@@ -91,6 +90,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   return {
     pageProps: {
       ...appProps.pageProps, // copy toàn bộ pageProps cũ và pageProps từ page khác truyền vào
+      token,
       userInfo: userResponse && userResponse.user
     }
   };
