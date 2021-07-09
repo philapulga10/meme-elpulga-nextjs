@@ -95,3 +95,5 @@
     - lưu ý khi dùng những thư viện có dùng trong typescript => có dấu ... => tức là hiện tại nó không dùng typescript => không khai báo kiểu dữ liệu => không tìm thấy file định nghĩa dữ liệu cho module cookie => do 1 số thư viện đã code sẵn cho mình kiểu dữ liệu => 1 số thì không => npm install để cài => cài theo devDependences
     - nên cài kiểu dữ liệu cho thư viện: là kiểu dữ liệu trong quá trình lập trình giúp nhắc lệnh tốt hơn
     - *** chú ý: tại sao trong userSirvice: lại không có await???
+  - 15. Chức năng Logout và Optional Chaining
+    - khi truy xuất vào nhiều cấp nên dùng ?. => cho mã nguồn được gọn gàng

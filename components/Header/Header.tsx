@@ -1,11 +1,30 @@
 import Link from 'next/link';
 
+import { useRouter } from 'next/router'
+import Cookies from 'js-cookie';
+
 import { useGlobalState } from '../../state';
 
 import './Header.scss';
 
 export default function Header() {
-  const [userInfo] = useGlobalState('currentUser');
+  const router = useRouter();
+  const [, setToken] = useGlobalState('token');
+  const [userInfo, setUserInfo] = useGlobalState('currentUser');
+
+  function handleLogout() {
+    const check = window.confirm('Bạn có thực sự muốn logout hay không?');
+
+    if (check) {
+      Cookies.remove('token');
+
+      setToken('');
+
+      setUserInfo(null);
+
+      router.push('/login');
+    }
+  }
 
   return (
     <header>
@@ -109,7 +128,7 @@ export default function Header() {
                     <img src={userInfo.profilepicture} alt="avatar" />
                   </span>
                   <span className="email">{userInfo.email}</span>
-                  <div className="logout">Logout</div>
+                  <div onClick={handleLogout} className="logout">Logout</div>
                 </a>
               </div>
             ) : (

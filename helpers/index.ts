@@ -25,13 +25,14 @@ export const parseJwt = (token: string) => {
   }
 };
 
-export const getTokenSSRAndCSS = (ctx: NextPageContext): [string, UserToken | null] => {
+// tại sao ở đây ctx lại có thể truyền hoặc không cần truyền vào => vì sau này có thể thực hiện nhiều nơi => không cần truyền ctx cũng được
+export const getTokenSSRAndCSS = (ctx?: NextPageContext): [string, UserToken | null] => {
   let token = '';
   let userToken = null;
 
   if (typeof (window) === "undefined") {
     // SSR
-    const cookieStr = ctx.req.headers.cookie || ''; // cookie này chứa tất cả cookie của trình duyệt
+    const cookieStr = ctx?.req?.headers?.cookie || ''; // cookie này chứa tất cả cookie của trình duyệt
     token = cookie.parse(cookieStr).token; // parse string ra object
     userToken = parseJwt(token);
   } else {
