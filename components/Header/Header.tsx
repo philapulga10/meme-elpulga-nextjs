@@ -1,8 +1,12 @@
 import Link from 'next/link';
 
+import { useGlobalState } from '../../state';
+
 import './Header.scss';
 
 export default function Header() {
+  const [userInfo] = useGlobalState('currentUser');
+
   return (
     <header>
       <div className="ass1-header">
@@ -97,18 +101,23 @@ export default function Header() {
           <a href="#" className="ass1-header__btn-upload ass1-btn">
             <i className="icon-Upvote"></i> Upload
           </a>
-          <div className="wrapper-user">
-            <a className="user-header">
-              <span className="avatar">
-                <img src="./images/avatar-02.png" alt="avatar" />
-              </span>
-              <span className="email">phi.elpulga10@gmail.com</span>
-              <div className="logout">Logout</div>
-            </a>
-          </div>
-          <Link href="/login">
-            <a className="ass1-header__btn-upload ass1-btn">Login</a>
-          </Link>
+          {
+            userInfo ? (
+              <div className="wrapper-user">
+                <a className="user-header">
+                  <span className="avatar">
+                    <img src={userInfo.profilepicture} alt="avatar" />
+                  </span>
+                  <span className="email">{userInfo.email}</span>
+                  <div className="logout">Logout</div>
+                </a>
+              </div>
+            ) : (
+              <Link href="/login">
+                <a className="ass1-header__btn-upload ass1-btn">Login</a>
+              </Link>
+            )
+          }
         </div>
       </div>
     </header>

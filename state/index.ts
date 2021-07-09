@@ -1,6 +1,21 @@
 import { createGlobalState } from 'react-hooks-global-state';
 
-const initialState = { currentUser: null };
+type TypeCurrentUser = {
+  USERID: string,
+  email: string,
+  gender: string,
+  description: string,
+  fullname: string,
+  status: string,
+  profilepicture: string,
+  permission: string
+};
+
+type TypeInitialState = {
+  currentUser: TypeCurrentUser | null
+};
+
+const initialState: TypeInitialState = { currentUser: null };
 
 const { useGlobalState } = createGlobalState(initialState);
 

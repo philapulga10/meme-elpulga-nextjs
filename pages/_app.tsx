@@ -91,7 +91,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   return {
     pageProps: {
       ...appProps.pageProps, // copy toàn bộ pageProps cũ và pageProps từ page khác truyền vào
-      // userInfo: userResponse && userResponse.user
+      userInfo: userResponse && userResponse.user
     }
   };
 }
