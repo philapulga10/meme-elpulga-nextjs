@@ -34,10 +34,6 @@ export const getTokenSSRAndCSS = (ctx: NextPageContext): [string, UserToken | nu
     const cookieStr = ctx.req.headers.cookie || ''; // cookie này chứa tất cả cookie của trình duyệt
     token = cookie.parse(cookieStr).token; // parse string ra object
     userToken = parseJwt(token);
-
-    // if (userToken && userToken.id) {
-    //   userResponse = await userService.getUserById(userToken.id);
-    // }
   } else {
     // CSR
     token = Cookies.get('token') || '';
