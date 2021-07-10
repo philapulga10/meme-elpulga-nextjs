@@ -1,6 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+
+import Cookies from 'js-cookie';
 
 import { handleError } from '../helpers';
+import userService from '../services/UserService';
+import { useGlobalState } from '../state';
+import { useNotAuthen } from '../helpers/useAuthen';
 
 const initRegisterData = {
   fullname: {
@@ -22,7 +27,24 @@ const initRegisterData = {
 };
 
 export default function Register() {
+  useNotAuthen();
+
   const [registerData, setRegisterData] = useState(initRegisterData);
+  const [, setToken] = useGlobalState('token');
+  const [, setUserInfo] = useGlobalState('currentUser');
+
+  // bất kể khi nào register data thay đổi thì function trong useMemo sẽ được đánh giá lại và return 1 giá trị mới
+  const isValidate = useMemo((): boolean => {
+    for (let key in registerData) {
+      const error = registerData[key].error;
+
+      if (error !== '') {
+        return false;
+      }
+    }
+
+    return true;
+  }, [registerData]);
 
   const onChangeData = (key: string) => (event: any) => {
     const value = event.target.value;
@@ -38,6 +60,42 @@ export default function Register() {
     });
   }
 
+  const handleRegister = (event) => {
+    event.preventDefault();
+
+    if (!isValidate) {
+      alert('Invalid input data');
+
+      return;
+    }
+
+    const email = registerData.email.value;
+    const fullname = registerData.fullname.value;
+    const password = registerData.password.value;
+    const repassword = registerData.repassword.value;
+
+    const data = {
+      email,
+      fullname,
+      password,
+      repassword
+    };
+
+    userService
+      .register(data)
+      .then((response) => {
+        if (response.status === 200) {
+          setToken(response.token);
+
+          setUserInfo(response.user);
+
+          Cookies.set('token', response.token, { expires: 30 * 12 });
+        } else {
+          alert(response.error);
+        }
+      });
+  }
+
   return (
     <div className="ass1-login">
       <div className="ass1-login__logo">
@@ -46,7 +104,7 @@ export default function Register() {
       <div className="ass1-login__content">
         <p>Đăng ký một tài khoản</p>
         <div className="ass1-login__form">
-          <form action="#">
+          <form onSubmit={handleRegister} action="#">
             <div className="form-group">
               <input
                 onChange={onChangeData('fullname')}
