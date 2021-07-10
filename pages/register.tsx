@@ -6,6 +6,7 @@ import { handleError } from '../helpers';
 import userService from '../services/UserService';
 import { useGlobalState } from '../state';
 import { useNotAuthen } from '../helpers/useAuthen';
+import { Button } from '../components/Button';
 
 const initRegisterData = {
   fullname: {
@@ -32,6 +33,7 @@ export default function Register() {
   const [registerData, setRegisterData] = useState(initRegisterData);
   const [, setToken] = useGlobalState('token');
   const [, setUserInfo] = useGlobalState('currentUser');
+  const [loading, setLoading] = useState(false);
 
   // bất kể khi nào register data thay đổi thì function trong useMemo sẽ được đánh giá lại và return 1 giá trị mới
   const isValidate = useMemo((): boolean => {
@@ -63,6 +65,10 @@ export default function Register() {
   const handleRegister = (event) => {
     event.preventDefault();
 
+    if (loading) {
+      return;
+    }
+
     if (!isValidate) {
       alert('Invalid input data');
 
@@ -81,6 +87,8 @@ export default function Register() {
       repassword
     };
 
+    setLoading(true);
+
     userService
       .register(data)
       .then((response) => {
@@ -93,6 +101,9 @@ export default function Register() {
         } else {
           alert(response.error);
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }
 
@@ -171,7 +182,13 @@ export default function Register() {
             </div>
             <div className="ass1-login__send">
               <a href="dang-nhap.html">Đăng nhập</a>
-              <button type="submit" className="ass1-btn">Đăng ký</button>
+              <Button
+                isLoading={loading}
+                type="submit"
+                className="ass1-btn"
+              >
+                Đăng ký
+              </Button>
             </div>
           </form>
         </div>

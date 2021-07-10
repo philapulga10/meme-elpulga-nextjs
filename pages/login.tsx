@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import fetch from 'isomorphic-fetch';
 
+import { Button } from "../components/Button";
 import { useGlobalState } from "../state";
 import { useNotAuthen } from "../helpers/useAuthen";
 
@@ -17,6 +18,7 @@ interface formLogin {
 
 export default function Login() {
   useNotAuthen();
+
   const initFormData = {
     email: '',
     password: ''
@@ -25,6 +27,7 @@ export default function Login() {
   const router = useRouter();
   const [userInfo] = useGlobalState('currentUser');
   const errorString = router.query.error;
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log('userInfo Login Page: ', userInfo);
@@ -69,6 +72,12 @@ export default function Login() {
   function handleSubmitForm(event) {
     event.preventDefault();
 
+    if (loading) {
+      return;
+    }
+
+    setLoading(true);
+
     event.target.submit();
   }
 
@@ -104,7 +113,13 @@ export default function Login() {
               <Link href="/register">
                 <a>Đăng ký một tài khoản</a>
               </Link>
-              <button type="submit" className="ass1-btn">Đăng nhập</button>
+              <Button
+                isLoading={loading}
+                type="submit"
+                className="ass1-btn"
+              >
+                Đăng nhập
+              </Button>
             </div>
           </form>
         </div>
