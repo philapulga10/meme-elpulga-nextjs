@@ -19,8 +19,6 @@ export const parseJwt = (token: string) => {
 
     return JSON.parse(jsonPayload);
   } catch (error) {
-    console.log('error', error);
-
     return null;
   }
 };

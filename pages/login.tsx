@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 import fetch from 'isomorphic-fetch';
+
 import { useGlobalState } from "../state";
 import { useNotAuthen } from "../helpers/useAuthen";
 
@@ -58,8 +60,6 @@ export default function Login() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data = ', data);
-
         // Cookies.set('token', data.token, { expires: 30 });
 
         // router.push('/');
@@ -101,7 +101,9 @@ export default function Login() {
               required
             />
             <div className="ass1-login__send">
-              <a href="dang-ky.html">Đăng ký một tài khoản</a>
+              <Link href="/register">
+                <a>Đăng ký một tài khoản</a>
+              </Link>
               <button type="submit" className="ass1-btn">Đăng nhập</button>
             </div>
           </form>
