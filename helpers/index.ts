@@ -40,3 +40,42 @@ export const getTokenSSRAndCSS = (ctx?: NextPageContext): [string, UserToken | n
 
   return [token, userToken];
 };
+
+export const handleError = (key: string, value: string, password?: string): string => {
+  let error = '';
+
+  if (value.trim().length === 0) {
+    error = `${key} is required!`;
+  }
+
+  switch (key) {
+    case 'email':
+      if (!validateEmail(value)) {
+        error = 'Invalid email';
+      }
+
+      break;
+    case 'password':
+      if (value.length < 6) {
+        error = 'Password is too short';
+      }
+
+      break;
+    case 'repassword':
+      if (value !== password) {
+        error = 'Re-entered password does not match';
+      }
+
+      break;
+    default:
+      break;
+  }
+
+  return error;
+};
+
+export const validateEmail = (email: string): boolean => {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  return re.test(String(email).toLowerCase());
+}
