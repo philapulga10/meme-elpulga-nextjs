@@ -1,4 +1,14 @@
-export default function HomeSideBar() {
+import React from 'react';
+
+import { PostType } from '../../pages';
+
+type PropsType = {
+  userPosts: PostType[]
+};
+
+const HomeSideBar: React.FC<PropsType> = ({ userPosts }) => {
+  console.log('userPosts = ', userPosts);
+
   return (
     <aside className="ass1-aside">
       <div className="ass1-content-head__t">
@@ -10,3 +20,5 @@ export default function HomeSideBar() {
     </aside>
   );
 }
+
+export default HomeSideBar;

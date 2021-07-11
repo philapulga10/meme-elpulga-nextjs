@@ -1,6 +1,15 @@
-import { PostItem } from "../PostItem";
+import React from 'react';
 
-export default function PostListItem() {
+import { PostItem } from "../PostItem";
+import { PostType } from '../../pages';
+
+type PropsType = {
+  listPosts: PostType[]
+};
+
+const PostListItem: React.FC<PropsType> = ({ listPosts }) => {
+  console.log('listPosts = ', listPosts);
+
   return (
     <div className="ass1-section__list">
       <PostItem />
@@ -13,3 +22,5 @@ export default function PostListItem() {
     </div>
   );
 };
+
+export default PostListItem;
