@@ -9,7 +9,7 @@ type ConfigType = {
 };
 
 const api = {
-  callJSON: async (url: string, { method = 'GET', data, token }: ConfigType = {}) => {
+  callJson: async (url: string, { method = 'GET', data, token }: ConfigType = {}) => {
     const URL = `${BASE_URL}/${url}`;
     const config = {
       method,

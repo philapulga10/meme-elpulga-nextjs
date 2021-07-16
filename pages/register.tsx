@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import Cookies from 'js-cookie';
 
 import { handleError } from '../helpers';
-import userService from '../services/UserService';
+import userService from '../services/userService';
 import { useGlobalState } from '../state';
 import { useNotAuthen } from '../helpers/useAuthen';
 import { Button } from '../components/Button';

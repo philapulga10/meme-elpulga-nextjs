@@ -11,33 +11,33 @@ import es6Promise from 'es6-promise'; // nhờ có es6Promise => có thể .then
 import { Header } from './../components/Header';
 import { Footer } from "../components/Footer";
 import { getTokenSSRAndCSS } from "../helpers";
-import userService from '../services/UserService';
+import userService from '../services/userService';
 import { useGlobalState } from '../state';
 
 es6Promise.polyfill();
 
 function MyApp({ Component, pageProps, router }: AppProps) {
-  const pathname = router.pathname;
+  const pathName = router.pathname;
   const [, setToken] = useGlobalState('token');
   const [currentUser, setCurrentUser] = useGlobalState('currentUser');
 
+  // chạy 1 lần duy nhất ở phía server
   useMemo(() => {
     setToken(pageProps.token);
-    // chạy 1 lần duy nhất ở phía server
     setCurrentUser(pageProps.userInfo);
   }, []);
 
   const hiddenFooter = useMemo(() => {
     const excluded = ['/', '/posts/[postId]'];
 
-    return (excluded.indexOf(pathname) !== -1);
-  }, [pathname]); // chú ý: địa chỉ của router props không thay đổi, chỉ thay đổi nội dung bên trong thui
+    return (excluded.indexOf(pathName) !== -1);
+  }, [pathName]); // chú ý: địa chỉ của router props không thay đổi, chỉ thay đổi nội dung bên trong thui
 
   const hiddenHeader = useMemo(() => {
-    const exluded = ['/login', '/register'];
+    const excluded = ['/login', '/register'];
 
-    return (exluded.indexOf(pathname) !== -1);
-  }, [pathname]);
+    return (excluded.indexOf(pathName) !== -1);
+  }, [pathName]);
 
   return (
     <div id="root">

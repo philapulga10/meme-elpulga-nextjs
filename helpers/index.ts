@@ -19,6 +19,8 @@ export const parseJwt = (token: string) => {
 
     return JSON.parse(jsonPayload);
   } catch (error) {
+    console.log('error = ', error);
+
     return null;
   }
 };
@@ -31,6 +33,7 @@ export const getTokenSSRAndCSS = (ctx?: NextPageContext): [string, UserToken | n
   if (typeof (window) === "undefined") {
     // SSR
     const cookieStr = ctx?.req?.headers?.cookie || ''; // cookie này chứa tất cả cookie của trình duyệt
+    
     token = cookie.parse(cookieStr).token; // parse string ra object
     userToken = parseJwt(token);
   } else {

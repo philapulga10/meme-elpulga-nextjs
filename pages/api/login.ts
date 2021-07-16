@@ -20,7 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const currentTime = new Date();
     const nextYear = new Date(currentTime.getFullYear() + 1, currentTime.getMonth(), currentTime.getDay());
 
-    const responseHeroku = await api.callJSON('/member/login.php', { method, data });
+    const responseHeroku = await api.callJson('/member/login.php', { method, data });
 
     if (responseHeroku.status === 200) {
       res.statusCode = 302;

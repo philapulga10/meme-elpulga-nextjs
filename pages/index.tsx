@@ -3,16 +3,18 @@ import React, { useEffect } from 'react';
 import { PostListItem } from "../components/PostListItem";
 import { HomeSideBar } from "../components/HomeSidebar";
 
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { GetServerSideProps, InferGetServerSidePropsType, NextPageContext } from 'next';
+import { getTokenSSRAndCSS } from '../helpers';
+import postService from '../services/postService';
 
 export type PostType = {
-  USERID: string,
+  userId: string,
   fullname: string,
-  profilepicture: string,
-  url_image: string,
-  PID: string,
-  post_content: string,
-  time_added: string,
+  profilePicture: string,
+  urlImage: string,
+  pId: string,
+  postContent: string,
+  timeAdded: string,
   status: string,
   count: string | null
 };
@@ -43,10 +45,21 @@ const Home: React.FC<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 }
 
 export const getServerSideProps: GetServerSideProps<HomeDataProps> = async (context) => {
+  const ctx = (context as unknown) as NextPageContext;
+  const [token, userToken] = getTokenSSRAndCSS(ctx);
+  const userId = userToken?.id;
+
+  // cần tìm hiểu kỹ chỗ này vì sao thời gian chờ ở đây là tổng 2 api
+  const listPostsPromise = await postService.getPostsPaging();
+  const userPostsPromise = await postService.getPostsByUserId({ token, userId });
+
+  // ==> cho chạy đồng thời => tiết kiệm thời gian
+  const [listPostsResponse, userPostsResponse] = await Promise.all([listPostsPromise, userPostsPromise]);
+
   return {
     props: {
-      listPosts: [],
-      userPosts: []
+      listPosts: listPostsResponse?.posts || [],
+      userPosts: userPostsResponse?.posts || []
     }
   };
 };
