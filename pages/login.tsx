@@ -30,10 +30,6 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log('userInfo Login Page: ', userInfo);
-  }, []);
-
-  useEffect(() => {
     if (errorString) {
       alert('Login Unsuccessful');
 
@@ -83,9 +79,9 @@ export default function Login() {
 
   return (
     <div className="ass1-login">
-      <div className="ass1-login__logo">
-        <a href="index.html" className="ass1-logo">Elpulga Meme</a>
-      </div>
+      <Link href="/">
+        <a className="ass1-logo">Elpulga Meme</a>
+      </Link>
       <div className="ass1-login__content">
         <p>Đăng nhập</p>
         <div className="ass1-login__form">

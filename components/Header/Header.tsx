@@ -30,9 +30,9 @@ export default function Header() {
     <header>
       <div className="ass1-header">
         <div className="container">
-          <a href="index.html" className="ass1-logo">
-            Elpulga Meme
-          </a>
+          <Link href="/">
+            <a className="ass1-logo">Elpulga Meme</a>
+          </Link>
           <nav>
             <ul className="ass1-header__menu">
               <li>
@@ -125,7 +125,7 @@ export default function Header() {
               <div className="wrapper-user">
                 <a className="user-header">
                   <span className="avatar">
-                    <img src={userInfo.profilePicture || 'images/avatar-02.png'} alt="avatar" />
+                    <img src={userInfo.profilepicture || 'images/avatar-02.png'} alt="avatar" />
                   </span>
                   <span className="email">{userInfo.email}</span>
                   <div onClick={handleLogout} className="logout">Logout</div>

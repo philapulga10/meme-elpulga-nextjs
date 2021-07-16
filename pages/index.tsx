@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { PostListItem } from "../components/PostListItem";
 import { HomeSideBar } from "../components/HomeSidebar";
@@ -8,13 +8,13 @@ import { getTokenSSRAndCSS } from '../helpers';
 import postService from '../services/postService';
 
 export type PostType = {
-  userId: string,
+  USERID: string,
   fullname: string,
-  profilePicture: string,
-  urlImage: string,
-  pId: string,
-  postContent: string,
-  timeAdded: string,
+  profilepicture: string,
+  url_image: string,
+  PID: string,
+  post_content: string,
+  time_added: string,
   status: string,
   count: string | null
 };
@@ -25,11 +25,6 @@ type HomeDataProps = {
 };
 
 const Home: React.FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ listPosts, userPosts }) => {
-  useEffect(() => {
-    console.log('listPosts = ', listPosts);
-    console.log('userPosts = ', userPosts);
-  }, []);
-
   return (
     <div className="container">
       <div className="row">

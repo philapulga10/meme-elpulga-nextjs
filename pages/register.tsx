@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 
 import Cookies from 'js-cookie';
 
@@ -110,7 +111,9 @@ export default function Register() {
   return (
     <div className="ass1-login">
       <div className="ass1-login__logo">
-        <a href="index.html" className="ass1-logo">Elpulga Meme</a>
+        <Link href="/">
+          <a className="ass1-logo">Elpulga Meme</a>
+        </Link>
       </div>
       <div className="ass1-login__content">
         <p>Đăng ký một tài khoản</p>
@@ -181,7 +184,9 @@ export default function Register() {
               }
             </div>
             <div className="ass1-login__send">
-              <a href="dang-nhap.html">Đăng nhập</a>
+              <Link href="/login">
+                <a>Đăng nhập</a>
+              </Link>
               <Button
                 isLoading={loading}
                 type="submit"

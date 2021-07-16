@@ -7,7 +7,7 @@ type TypeCurrentUser = {
   description: string,
   fullname: string,
   status: string,
-  profilePicture: string,
+  profilepicture: string,
   permission: string
 };
 
