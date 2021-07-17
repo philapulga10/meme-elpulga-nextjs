@@ -1,7 +1,7 @@
 import api from './api';
 
 const postService = {
-  getPostsPaging: async ({ pageSize = 10, currPage = 1 } = {}) => {
+  getPostsPaging: async ({ pageSize = 1, currPage = 1 } = {}) => {
     const params = `pagesize=${pageSize}&currPage=${currPage}`;
     const url = `/post/getListPagination.php?${params}`;
 
