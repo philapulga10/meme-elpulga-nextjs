@@ -18,6 +18,9 @@ const postService = {
     const url = `/post/getListPostUserID.php?userid=${userId}`;
 
     return api.callJson(url, { token });
+  },
+  getPostSearch: async ({ query }) => {
+    return api.callJson(`/post/search.php?query=${query}`);
   }
 };
 
