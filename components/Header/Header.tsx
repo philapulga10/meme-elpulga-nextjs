@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { useGlobalState } from '../../state';
 
 import './Header.scss';
+import HeaderSearch from './HeaderSearch';
 
 export default function Header() {
   const router = useRouter();
@@ -109,14 +110,7 @@ export default function Header() {
               </li>
             </ul>
           </nav>
-          <div className="ass1-header__search">
-            <form action="#">
-              <label>
-                <input type="search" name="search-text" className="form-control" placeholder="Nhập từ khóa ..." />
-                <i className="icon-Search"></i>
-              </label>
-            </form>
-          </div>
+          <HeaderSearch />
           <a href="#" className="ass1-header__btn-upload ass1-btn">
             <i className="icon-Upvote"></i> Upload
           </a>
