@@ -14,7 +14,7 @@ type PropTypes = {
 
 const SearchPage: NextPage<PropTypes> = ({ listPosts }) => {
   const router = useRouter();
-  const searchStr = router.query.q || '';
+  const searchStr = (router.query.q || '') as string;
 
   useEffect(() => {
     if (!searchStr) {
@@ -30,7 +30,13 @@ const SearchPage: NextPage<PropTypes> = ({ listPosts }) => {
       </div>
       <Masonry className="ass1-section__wrap row ass1-section__isotope-init">
         {
-          listPosts.map(post => <PostItem key={post.PID} post={post} customClass="col-lg-6" />)
+          listPosts.map(post => <PostItem
+            key={post.PID}
+            post={post}
+            customClass="col-lg-6"
+            isHightLight={true}
+            query={searchStr}
+          />)
         }
       </Masonry>
     </div>
