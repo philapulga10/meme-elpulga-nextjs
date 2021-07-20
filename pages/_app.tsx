@@ -13,18 +13,21 @@ import { Footer } from "../components/Footer";
 import { getTokenSSRAndCSS } from "../helpers";
 import userService from '../services/userService';
 import { useGlobalState } from '../state';
+import postService from "../services/postService";
 
 es6Promise.polyfill();
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const pathName = router.pathname;
   const [, setToken] = useGlobalState('token');
-  const [currentUser, setCurrentUser] = useGlobalState('currentUser');
+  const [, setCurrentUser] = useGlobalState('currentUser');
+  const [, setCategories] = useGlobalState('categories');
 
   // chạy 1 lần duy nhất ở phía server
   useMemo(() => {
     setToken(pageProps.token);
     setCurrentUser(pageProps.userInfo);
+    setCategories(pageProps.categories);
   }, []);
 
   const hiddenFooter = useMemo(() => {
@@ -75,21 +78,28 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 }
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
-  let userResponse = null;
+  let userPromise = null, categoriesPromise = null;
 
   const appProps = await App.getInitialProps(appContext);
 
   const [token, userToken] = getTokenSSRAndCSS(appContext.ctx);
 
-  if (typeof (window) === 'undefined' && userToken && userToken?.id && userToken?.email) {
-    userResponse = await userService.getUserById(userToken.id);
+  if (typeof (window) === 'undefined') {
+    if (userToken?.id && userToken?.email) {
+      userPromise = await userService.getUserById(userToken.id);
+    }
+
+    categoriesPromise = await postService.getCategories();
   }
+
+  const [userResponse, categoriesResponse] = await Promise.all([userPromise, categoriesPromise]);
 
   return {
     pageProps: {
       ...appProps.pageProps, // copy toàn bộ pageProps cũ và pageProps từ page khác truyền vào
       token,
-      userInfo: userResponse && userResponse.user
+      userInfo: userResponse?.user || null,
+      categories: categoriesResponse?.categories || []
     }
   };
 }

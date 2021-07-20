@@ -11,14 +11,21 @@ type TypeCurrentUser = {
   permission: string
 };
 
+type TypeCategories = {
+  id: number,
+  text: string
+};
+
 type TypeInitialState = {
   token?: string,
   currentUser: TypeCurrentUser | null
+  categories: TypeCategories[]
 };
 
 const initialState: TypeInitialState = {
   token: '',
-  currentUser: null
+  currentUser: null,
+  categories: []
 };
 
 const { useGlobalState } = createGlobalState(initialState);

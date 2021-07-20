@@ -21,6 +21,18 @@ const postService = {
   },
   getPostSearch: async ({ query }) => {
     return api.callJson(`/post/search.php?query=${encodeURI(query)}`);
+  },
+  getCategories: async () => {
+    return api.callJson(`/categories/index.php`);
+  },
+  getPostPagingByCategories: async ({ pageSize = 10, currPage = 1, tagIndex = '' }) => {
+    if (!tagIndex) {
+      return null;
+    }
+
+    const params = `pagesize=${pageSize}&currPage=${currPage}&tagIndex=${tagIndex}`;
+
+    return api.callJson(`post/getListByCategory.php?${params}`);
   }
 };
 
