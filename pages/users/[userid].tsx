@@ -31,14 +31,14 @@ const UserDetail: NextPage<PropsType> = ({ userDetailInfo, userDetailPosts }) =>
 
   return (
     <div className="container">
-      <UserDetailInfo userDetailInfo={userDetailInfo} />
+      <UserDetailInfo userDetailInfo={userDetailInfo} postCount={userDetailPosts.length} />
       <UserDetailPosts userDetailPosts={userDetailPosts} />
     </div>
   )
 };
 
 UserDetail.getInitialProps = async (ctx: NextPageContext) => {
-  const userId = ctx.query.userId as string;
+  const userId = ctx.query.userid as string;
   const [token] = getTokenSSRAndCSS(ctx);
 
   const userPromise = userService.getUserById(userId);
@@ -48,7 +48,7 @@ UserDetail.getInitialProps = async (ctx: NextPageContext) => {
 
   return {
     userDetailInfo: userResponse?.user || null,
-    userDetailPosts: postResponse.posts || []
+    userDetailPosts: postResponse?.posts || []
   };
 };
 
