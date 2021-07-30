@@ -101,3 +101,4 @@
   - 12. Chức năng User Profile và kĩ thuật upload avatar
     - object file là 1 dạng object đặc biệt, không thể mô tả ở trong json, chỉ có thể truyền thông qua các ô input file thông qua form data
     - sau khi nhận được object file => sử dụng JS => mã hóa file => dạng base 64 => render base 64 ra review => gửi object file (form data không dùng thẻ form)
+    - cần nghiên cứu kỹ hơn về feature này

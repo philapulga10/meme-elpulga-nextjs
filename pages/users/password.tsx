@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useGlobalState } from "../../state";
 
 import { useAuthen } from "../../helpers/useAuthen";
-import userService from "../../services/UserService";
+import userService from "../../services/userService";
 
 const initState = {
   oldPassword: '',

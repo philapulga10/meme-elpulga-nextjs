@@ -13,6 +13,13 @@ type PasswordData = {
   reNewPassword: string
 };
 
+type ProfileData = {
+  fullname: string,
+  gender: string,
+  description: string,
+  avatar: File | null
+};
+
 const userService = {
   getUserById: async (userId: string) => {
     return api.callJson(`member/member.php?userid=${userId}`);
@@ -28,6 +35,22 @@ const userService = {
       data,
       token,
       method: 'POST'
+    });
+  },
+  uploadProfile: async (data: ProfileData, token: string) => {
+    const formData = new FormData();
+
+    formData.append('fullname', data.fullname);
+    formData.append('gender', data.gender);
+    formData.append('description', data.description);
+
+    if (data.avatar) {
+      formData.append('avatar', data.avatar);
+    }
+
+    return api.callFormData('/member/update.php', {
+      data: formData,
+      token
     });
   }
 };
