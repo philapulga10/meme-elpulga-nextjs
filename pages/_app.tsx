@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css"; // là lúc sử dụng withCSS, vì muốn import CSS bên ngoài vào
 import '../assets/css/style.css';
+import 'nprogress/nprogress.css';
 import '../assets/css/loading.css';
 
 import { useState, useEffect, useMemo } from 'react';
@@ -8,6 +9,7 @@ import App, { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 
 import es6Promise from 'es6-promise'; // nhờ có es6Promise => có thể .then sau fetch
+import NProgess from 'nprogress';
 
 import { Header } from './../components/Header';
 import { Footer } from "../components/Footer";
@@ -20,22 +22,26 @@ es6Promise.polyfill();
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const pathName = router.pathname;
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [, setToken] = useGlobalState('token');
   const [, setCurrentUser] = useGlobalState('currentUser');
   const [, setCategories] = useGlobalState('categories');
 
   useEffect(() => {
     router.events.on('routeChangeStart', () => {
-      setLoading(true);
+      // setLoading(true);
+      NProgess.set(0.5);
+      NProgess.start();
     });
 
     router.events.on('routeChangeComplete', () => {
-      setLoading(false);
+      // setLoading(false);
+      NProgess.done();
     });
 
     router.events.on('routeChangeError', (error) => {
-      setLoading(false);
+      // setLoading(false);
+      NProgess.done();
     });
   }, []);
 
@@ -89,7 +95,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         <Component {...pageProps} />
       </main>
       {!hiddenFooter && <Footer />}
-      {
+      {/* {
         loading && (
           <div className="loading-page">
             <svg
@@ -116,7 +122,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
             </svg>
           </div>
         )
-      }
+      } */}
     </div>
   )
 }
