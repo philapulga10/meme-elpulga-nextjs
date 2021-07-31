@@ -38,7 +38,7 @@ const UserDetail: NextPage<PropsType> = ({ userDetailInfo, userDetailPosts }) =>
 };
 
 UserDetail.getInitialProps = async (ctx: NextPageContext) => {
-  const userId = ctx.query.userid as string;
+  const userId = ctx.query.userId as string;
   const [token] = getTokenSSRAndCSS(ctx);
 
   const userPromise = userService.getUserById(userId);
