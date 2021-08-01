@@ -8,14 +8,14 @@ export default function UserProfile() {
   const [user, setUser] = useState(currentUser);
   const [objFile, setObjFile] = useState({ file: null, base64URL: '' });
   const [token] = useGlobalState('token');
-  const inputElement = useRef(null);
+  const inputFileEl = useRef(null);
 
   const handleOnChange = (key: string) => (event) => {
     setUser({ ...user, [key]: event.target.value });
   };
 
   const handleSelectFile = () => {
-    inputElement.current.click();
+    inputFileEl.current.click();
   };
 
   const handleChangeFile = (event) => {
@@ -83,7 +83,8 @@ export default function UserProfile() {
               type="text"
               value={user.fullname}
               className="form-control"
-              placeholder="Tên ..." required
+              placeholder="Tên ..."
+              required
             />
             <select
               onChange={handleOnChange('gender')}
@@ -97,7 +98,7 @@ export default function UserProfile() {
             <input
               style={{ display: 'none' }}
               onChange={handleChangeFile}
-              ref={inputElement}
+              ref={inputFileEl}
               type="file"
               name="avatar"
               placeholder="Ảnh đại diện"
