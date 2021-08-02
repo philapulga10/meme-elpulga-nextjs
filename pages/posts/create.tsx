@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useGlobalState } from '../../state';
+import postService from '../../services/postService';
 import { PostDetailForm } from "../PostDetailForm";
 import { PostDetailSidebar } from "../PostDetailSidebar";
 import { useAuthen } from '../../helpers/useAuthen';
@@ -18,12 +20,31 @@ export default function PostCreate() {
   useAuthen();
 
   const [postData, setPostData] = useState(initState);
-  const onChangeCategory = (newCategory: string[]) => {
-    setPostData({ ...postData, category: newCategory });
-  };
+  const [token] = useGlobalState('token');
+  const [loading, setLoading] = useState(false);
 
   const onChangeDetailForm = (key: string, value: any) => {
     setPostData({ ...postData, [key]: value });
+  };
+
+  const handleSubmitPost = () => {
+    setLoading(true);
+
+    postService
+      .createNewPost(postData, token)
+      .then(response => {
+        console.log("response = ", response);
+        if (response.status === 200) {
+          alert('Post successful');
+
+          setPostData(initState);
+        } else {
+          alert(response.error);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -39,8 +60,10 @@ export default function PostCreate() {
         </div>
         <div className="col-lg-4">
           <PostDetailSidebar
+            loading={loading}
             category={postData.category}
-            onChangeCategory={onChangeCategory}
+            onChangeDetailForm={onChangeDetailForm}
+            handleSubmitPost={handleSubmitPost}
           />
         </div>
       </div>
