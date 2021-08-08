@@ -102,3 +102,5 @@
     - object file là 1 dạng object đặc biệt, không thể mô tả ở trong json, chỉ có thể truyền thông qua các ô input file thông qua form data
     - sau khi nhận được object file => sử dụng JS => mã hóa file => dạng base 64 => render base 64 ra review => gửi object file (form data không dùng thẻ form)
     - cần nghiên cứu kỹ hơn về feature này
+  - 18. Gọi API cho chức năng Post Detail
+    - nextjs tách nhỏ trang thành nhiều page, mỗi khi user tuy cập vào 1 page nào đó thì user chỉ load toàn bộ code trong nội tại page đó thôi còn page khác user không truy cập thì sẽ không load => tối ưu mã nguồn hơn => không tải toàn bộ ứng dụng => tốc độ tải trang sẽ nhanh hơn

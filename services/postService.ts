@@ -60,6 +60,18 @@ const postService = {
     const params = `pagesize=${pageSize}&currPage=${currPage}&tagIndex=${tagIndex}`;
 
     return api.callJson(`post/getListByCategory.php?${params}`);
+  },
+  getPostsByPostId: async ({ postId, token }) => {
+    if (!postId || !token) {
+      return {
+        status: 500,
+        error: ''
+      }
+    }
+
+    const url = `/post/post.php?postid=${postId}`;
+
+    return api.callJson(url, { token });
   }
 };
 
